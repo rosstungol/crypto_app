@@ -54,14 +54,14 @@ class AddAssetDialog extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               color: Colors.white,
             ),
-            child: _buildUI(),
+            child: _buildUI(context),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildUI() {
+  Widget _buildUI(BuildContext context) {
     if (controller.loading.isTrue) {
       return const Center(
         child: SizedBox(
@@ -71,8 +71,31 @@ class AddAssetDialog extends StatelessWidget {
         ),
       );
     } else {
-      return const Column(
-        children: [],
+      return Padding(
+        padding: const EdgeInsets.symmetric(),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            DropdownButton(
+              value: controller.selectedAsset.value,
+              items: controller.assets.map(
+                (asset) {
+                  return DropdownMenuItem(
+                    value: asset,
+                    child: Text(asset),
+                  );
+                },
+              ).toList(),
+              onChanged: (value) {
+                if (value != null) {
+                  controller.selectedAsset.value = value;
+                }
+              },
+            )
+          ],
+        ),
       );
     }
   }
