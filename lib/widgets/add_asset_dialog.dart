@@ -8,6 +8,7 @@ class AddAssetDialogController extends GetxController {
   RxBool loading = false.obs;
   RxList<String> assets = <String>[].obs;
   RxString selectedAsset = ''.obs;
+  RxDouble assetValue = 0.0.obs;
 
   @override
   void onInit() {
@@ -72,7 +73,7 @@ class AddAssetDialog extends StatelessWidget {
       );
     } else {
       return Padding(
-        padding: const EdgeInsets.symmetric(),
+        padding: const EdgeInsets.symmetric(horizontal: 25),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -93,6 +94,27 @@ class AddAssetDialog extends StatelessWidget {
                   controller.selectedAsset.value = value;
                 }
               },
+            ),
+            TextField(
+              onChanged: (value) {
+                controller.assetValue.value = double.parse(value);
+              },
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+            ),
+            MaterialButton(
+              onPressed: () {
+                Get.back(closeOverlays: true);
+              },
+              color: Theme.of(context).colorScheme.primary,
+              child: const Text(
+                'Add Asset',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
             )
           ],
         ),
