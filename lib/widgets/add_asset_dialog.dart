@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../controllers/assets_controller.dart';
 import '../models/api_response.dart';
 import '../services/http_service.dart';
 
@@ -106,6 +107,11 @@ class AddAssetDialog extends StatelessWidget {
             ),
             MaterialButton(
               onPressed: () {
+                AssetsController assetsController = Get.find();
+                assetsController.addTrackedAsset(
+                  controller.selectedAsset.value,
+                  controller.assetValue.value,
+                );
                 Get.back(closeOverlays: true);
               },
               color: Theme.of(context).colorScheme.primary,

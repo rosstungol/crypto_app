@@ -9,6 +9,7 @@ import 'utils.dart';
 Future<void> main() async {
   await dotenv.load(fileName: '.env');
   await registerServices();
+  await registerControllers();
 
   runApp(const MyApp());
 }
