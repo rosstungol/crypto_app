@@ -4,9 +4,12 @@ import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'pages/home_page.dart';
+import 'utils.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: '.env');
+  await registerServices();
+
   runApp(const MyApp());
 }
 
