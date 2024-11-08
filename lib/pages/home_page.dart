@@ -54,7 +54,15 @@ class HomePage extends StatelessWidget {
       child: const Center(
         child: Text.rich(
           TextSpan(
-            children: [],
+            children: [
+              TextSpan(
+                text: '\$',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                ),
+              )
+            ],
           ),
         ),
       ),
