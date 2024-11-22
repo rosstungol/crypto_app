@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/api_response.dart';
 import '../models/coin_data.dart';
@@ -14,6 +17,7 @@ class AssetsController extends GetxController {
   void onInit() {
     super.onInit();
     _getAssets();
+    _loadTrackedAssetsFromStorage();
   }
 
   Future<void> _getAssets() async {
@@ -31,14 +35,33 @@ class AssetsController extends GetxController {
   void addTrackedAsset(
     String name,
     double amount,
-  ) {
+  ) async {
     trackedAssets.add(
       TrackedAsset(
         name: name,
         amount: amount,
       ),
     );
-    print(trackedAssets);
+    List<String> data =
+        trackedAssets.map((asset) => jsonEncode(asset)).toList();
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('tracked assets', data);
+  }
+
+  void _loadTrackedAssetsFromStorage() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? data = prefs.getStringList('tracked assets');
+
+    if (data != null) {
+      trackedAssets.value = data
+          .map(
+            (el) => TrackedAsset.fromJson(
+              jsonDecode(el),
+            ),
+          )
+          .toList();
+    }
   }
 
   double getPortfolioValue() {
