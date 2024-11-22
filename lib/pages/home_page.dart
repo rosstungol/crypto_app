@@ -5,6 +5,7 @@ import '../controllers/assets_controller.dart';
 import '../models/tracked_asset.dart';
 import '../utils.dart';
 import '../widgets/add_asset_dialog.dart';
+import 'details_page.dart';
 
 class HomePage extends StatelessWidget {
   AssetsController assetsController = Get.find();
@@ -135,6 +136,15 @@ class HomePage extends StatelessWidget {
                         color: Colors.black,
                       ),
                     ),
+                    onTap: () {
+                      Get.to(() {
+                        return DetailsPage(
+                          coin: assetsController.getCoinData(
+                            trackedAsset.name!,
+                          )!,
+                        );
+                      });
+                    },
                   );
                 }),
           )
